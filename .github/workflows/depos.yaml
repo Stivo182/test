@@ -1,0 +1,8 @@
+name: Обновление зависимостей
+
+on:
+  workflow_dispatch:
+
+jobs:
+  test:
+    uses: Stivo182/test@main
