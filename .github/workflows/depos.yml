@@ -11,7 +11,11 @@ on:
         required: false
         type: string
         default: 'latest'
-
+  
+permissions:
+  contents: write
+  pull-requests: write
+  
 jobs:
   update-dependencies:
     runs-on: ubuntu-latest
