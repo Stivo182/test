@@ -35,7 +35,9 @@ jobs:
           cmd="depos upgrade"
           [[ -n "${{ inputs.filter }}" ]] && cmd="$cmd -f '${{ inputs.filter }}'"
           [[ -n "${{ inputs.target }}" ]] && cmd="$cmd -t ${{ inputs.target }}"
+          echo "depos_output<<EOF" >> $GITHUB_OUTPUT
           eval $cmd 2>&1 | sed '1d;$d' >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
 
       - name: Проверка наличия изменений
         id: check-changes
@@ -46,7 +48,7 @@ jobs:
             echo "changes_detected=false" >> $GITHUB_OUTPUT
           fi
 
-      - name: Create or Update Pull Request
+      - name: Создание PR
         if: steps.check-changes.outputs.changes_detected == 'true'
         uses: peter-evans/create-pull-request@v7
         with:
