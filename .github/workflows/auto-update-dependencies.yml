@@ -11,4 +11,4 @@ permissions:
 
 jobs:
   test:
-    uses: Stivo182/test/.github/workflows/depos.yml@main
+    uses: Stivo182/test/.github/workflows/update-dependencies.yml@main
