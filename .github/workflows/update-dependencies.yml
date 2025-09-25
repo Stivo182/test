@@ -57,6 +57,7 @@ jobs:
         uses: peter-evans/create-pull-request@v7
         with:
           title: "Обновление зависимостей"
+          commit-message: "Обновление зависимостей"
           body: ${{ steps.depos-upgrade.outputs.depos_output }}
           add-paths: packagedef
           branch: depos/update-dependencies
