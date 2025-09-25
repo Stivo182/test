@@ -23,6 +23,12 @@ jobs:
       - name: Актуализация
         uses: actions/checkout@v5.0.0
 
+      - name: Установка свойств git
+        shell: bash
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
       - name: Установка OneScript
         uses: otymko/setup-onescript@v1.5.1
         with:
@@ -52,13 +58,16 @@ jobs:
             echo "changes_detected=false" >> $GITHUB_OUTPUT
           fi
 
+      - name: Коммит изменений только для packagedef
+        if: steps.check-changes.outputs.changes_detected == 'true'
+        run: |
+          git add "packagedef"
+          git commit -m "Обновление зависимостей"
+
       - name: Создание PR
         if: steps.check-changes.outputs.changes_detected == 'true'
         uses: peter-evans/create-pull-request@v7
         with:
-          committer: github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>
-          author: ${{ github.actor }} <${{ github.actor_id }}+${{ github.actor }}@users.noreply.github.com>
-          commit-message: "Обновление зависимостей"
           title: "Обновление зависимостей"
           body: ${{ steps.depos-upgrade.outputs.depos_output }}
           branch: depos/update-dependencies
