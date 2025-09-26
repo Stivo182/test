@@ -11,18 +11,6 @@ on:
         required: false
         type: string
         default: 'latest'
-  workflow_dispatch:
-    inputs:
-      filter:
-        description: 'Фильтр пакетов'
-      target:
-        description: 'Тип версии'
-        default: 'latest'
-        type: choice
-        options:
-          - latest
-          - minor
-          - patch
 
 permissions:
   contents: write

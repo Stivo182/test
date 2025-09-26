@@ -1,9 +1,20 @@
 name: Обновление зависимостей
 
 on:
-  workflow_dispatch:
   schedule:
     - cron: '0 8 * * *'
+  workflow_dispatch:
+    inputs:
+      filter:
+        description: 'Фильтр пакетов'
+      target:
+        description: 'Тип версии'
+        default: 'latest'
+        type: choice
+        options:
+          - latest
+          - minor
+          - patch
 
 permissions:
   contents: write
@@ -12,3 +23,6 @@ permissions:
 jobs:
   update-dependencies:
     uses: Stivo182/test/.github/workflows/update-dependencies.yml@main
+    with:
+      filter: ${{ inputs.filter }}
+      target: ${{ inputs.target }
