@@ -10,5 +10,5 @@ permissions:
   pull-requests: write
 
 jobs:
-  test:
+  update-dependencies:
     uses: Stivo182/test/.github/workflows/update-dependencies.yml@main
