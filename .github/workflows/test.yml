@@ -22,7 +22,7 @@ permissions:
 
 jobs:
   update-dependencies:
-    uses: Stivo182/test/.github/workflows/update-dependencies.yml@main
+    uses: Stivo182/test/.github/workflows/deps-upgrade-pr.yml@main
     with:
       filter: ${{ inputs.filter }}
       target: ${{ inputs.target }}
