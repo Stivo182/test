@@ -59,9 +59,9 @@ jobs:
           title=$(jq -r '
             (if "${{ inputs.message-prefix }}" != "" then "${{ inputs.message-prefix }}: " else "" end) +
             "Bump " + 
-            (.[0:3] | map("\(.packageName) \(.minVersionBefore) → \(.minVersionAfter)") | join(", ")) + 
-            (if length > 3 then 
-              " and \(length - 3) more package" + (if length - 3 > 1 then "s" else "" end) 
+            (.[0:2] | map("\(.packageName) \(.minVersionBefore) → \(.minVersionAfter)") | join(", ")) + 
+            (if length > 2 then 
+              " and \(length - 2) more package" + (if length - 2 > 1 then "s" else "" end) 
             else "" end)
           ' packages.json)
           echo "title=$title" >> $GITHUB_OUTPUT
