@@ -20,9 +20,11 @@ runs:
   using: 'composite'
   steps:
     - name: Установка пакета depos
+      shell: bash
       run: opm install depos
 
     - name: Обновление зависимостей
+      shell: bash
       run: |
         command="depos upgrade"
         

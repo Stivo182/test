@@ -35,9 +35,6 @@ jobs:
       - name: Установка пакета opm
         run: opm install opm
 
-      - name: Установка пакета depos
-        run: opm install depos
-
       - name: Обновление зависимостей
         uses: Stivo182/test/upgrade@main
         with:
