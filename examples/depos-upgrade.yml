@@ -1,4 +1,4 @@
-name: Обновление зависимостей без фиксации
+name: Обновление зависимостей без Pull Request
 
 on:
   workflow_dispatch:
@@ -27,7 +27,7 @@ jobs:
           version: stable 
 
       - name: Обновление зависимостей в packagedef
-        uses: Stivo182/test/upgrade@main
+        uses: Stivo182/dtest/upgrade@main
         with:
           filter: ${{ inputs.filter }}
           target: ${{ inputs.target }}

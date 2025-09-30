@@ -10,7 +10,7 @@ inputs:
     required: false
     default: latest
   message-prefix:
-    description: Префикс для сообщения коммита
+    description: Префикс для сообщения коммита и заголовка Pull Request
     required: false
 
 runs:
