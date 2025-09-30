@@ -1,8 +1,6 @@
-name: Обновление зависимостей
+name: Обновление зависимостей по запросу
 
 on:
-  schedule:
-    - cron: '0 8 * * *'
   workflow_dispatch:
     inputs:
       filter:
@@ -21,8 +19,9 @@ permissions:
   pull-requests: write
 
 jobs:
-  update-dependencies:
+  deps-upgrade-pr:
     uses: Stivo182/test/.github/workflows/deps-upgrade-pr.yml@main
     with:
       filter: ${{ inputs.filter }}
       target: ${{ inputs.target }}
+      message-prefix: build(deps) 
