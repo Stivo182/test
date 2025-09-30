@@ -3,10 +3,10 @@ description: Обновляет зависимости в файле packagedef 
 
 inputs:
   filter:
-    description: 'Фильтр пакетов по именам (через запятую или пробел), шаблону (*, ?) или регулярному выражению'
+    description: Фильтр пакетов по именам (через запятую или пробел), шаблону (*, ?) или регулярному выражению
     required: false
   target:
-    description: 'Тип целевой версии (latest, minor, patch)'
+    description: Тип целевой версии (latest, minor, patch)
     required: false
     default: latest
   message-prefix:
@@ -46,21 +46,36 @@ runs:
       id: format-output
       shell: bash
       run: |
-        # Title
+        # Формируем заголовок PR
         title=$(jq -r '
-          (if "${{ inputs.message-prefix }}" != "" then "${{ inputs.message-prefix }}: " else "" end) +
-          "Bump " + 
-          (.[0:2] | map("\(.packageName) \(.minVersionBefore) → \(.minVersionAfter)") | join(", ")) + 
-          (if length > 2 then 
-            " and \(length - 2) more package" + (if length - 2 > 1 then "s" else "" end) 
-          else "" end)
+          (if "${{ inputs.message-prefix }}" != "" 
+             then "${{ inputs.message-prefix }}: " 
+             else "" 
+           end) +
+          "Bump " +
+          (.[0:2] 
+             | map("\(.packageName) \(.minVersionBefore) → \(.minVersionAfter)") 
+             | join(", ")
+          ) +
+          (if length > 2 
+             then " and \(length - 2) more package" + 
+                (if length - 2 > 1 then "s" else "" end) 
+             else "" 
+           end)
         ' packages.json)
         echo "title=$title" >> $GITHUB_OUTPUT
 
-        # Body
-        echo "body<<EOF" >> $GITHUB_OUTPUT
-        jq -r '.[] | "- **\(.packageName)**: \(.minVersionBefore) → \(.minVersionAfter) \n([repo](https://github.com/oscript-library/\(.packageName)) · [hub](https://hub.oscript.io/package/\(.packageName)))"' packages.json >> $GITHUB_OUTPUT
-        echo "EOF" >> $GITHUB_OUTPUT    
+        # Формируем тело PR
+        {
+          echo "body<<EOF"
+          jq -r '
+            .[] 
+            | "- **\(.packageName)**: \(.minVersionBefore) → \(.minVersionAfter)\n" +
+              "([repo](https://github.com/oscript-library/\(.packageName)) · " +
+              "[hub](https://hub.oscript.io/package/\(.packageName)))"
+          ' packages.json
+          echo "EOF"
+        } >> $GITHUB_OUTPUT
 
     - name: Создание Pull Request
       if: steps.check-changes.outputs.has_changes == 'true'
