@@ -1,8 +1,6 @@
 name: Обновление зависимостей
 
 on:
-  schedule:
-    - cron: '0 8 * * *'
   workflow_dispatch:
     inputs:
       filter:
@@ -19,6 +17,9 @@ on:
 jobs:
   deps-upgrade:
     runs-on: ubuntu-latest
+    env:
+      MIN_OPM_VERSION: 1.3.0
+
     steps:
       - name: Актуализация
         uses: actions/checkout@v5.0.0
@@ -28,8 +29,17 @@ jobs:
         with:
           version: stable 
 
-      - name: Обновление пакета opm
-        run: opm install opm
+      - name: Проверка и установка opm
+        run: |
+          if command -v opm >/dev/null 2>&1; then
+            v=$(opm -v | grep -oP '\d+\.\d+\.\d+')
+            if [[ "$(printf '%s\n' "$v" "$MIN_OPM_VERSION" | sort -V | head -n1)" != "$MIN_OPM_VERSION" ]]; then
+              opm install opm
+            fi
+          else
+            opm install opm
+          fi
+          opm -v
 
       - name: Обновление зависимостей
         uses: Stivo182/test/upgrade@main
