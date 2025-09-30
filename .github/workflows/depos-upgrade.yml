@@ -1,0 +1,39 @@
+name: Обновление зависимостей без фиксации
+
+on:
+  workflow_dispatch:
+    inputs:
+      filter:
+        description: 'Фильтр пакетов'
+      target:
+        description: 'Тип версии'
+        default: 'latest'
+        type: choice
+        options:
+          - latest
+          - minor
+          - patch
+
+jobs:
+  deps-upgrade:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Актуализация
+        uses: actions/checkout@v5.0.0
+
+      - name: Установка OneScript
+        uses: otymko/setup-onescript@v1.5.1
+        with:
+          version: stable 
+
+      - name: Обновление зависимостей в packagedef
+        uses: Stivo182/test/upgrade@main
+        with:
+          filter: ${{ inputs.filter }}
+          target: ${{ inputs.target }}
+          output: report.json
+
+        # 1. Обновлен файл packagedef
+        # 2. Создан файл report.json с обновленными пакетами
+
+        # ...
