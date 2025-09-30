@@ -20,7 +20,7 @@ permissions:
 
 jobs:
   depos-upgrade-pr:
-    uses: Stivo182/test/.github/workflows/upgrade-pr.yml@main
+    uses: Stivo182/test@main
     with:
       filter: ${{ inputs.filter }}
       target: ${{ inputs.target }}
