@@ -1,4 +1,4 @@
-name: Обновление зависимостей по запросу
+name: Обновление зависимостей
 
 on:
   workflow_dispatch:
@@ -8,7 +8,7 @@ on:
       target:
         description: 'Тип версии'
         default: 'latest'
-        type: choice
+        type: choice 
         options:
           - latest
           - minor
@@ -19,9 +19,12 @@ permissions:
   pull-requests: write
 
 jobs:
-  depos-upgrade-pr:
-    uses: Stivo182/test@main
-    with:
-      filter: ${{ inputs.filter }}
-      target: ${{ inputs.target }}
-      message-prefix: build(deps) 
+  update-dependencies:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Обновление зависимостей
+        uses: Stivo182/test@main
+        with:
+          filter: ${{ inputs.filter }}
+          target: ${{ inputs.target }}
+          message-prefix: build(deps) 
