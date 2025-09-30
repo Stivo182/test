@@ -43,19 +43,19 @@ runs:
         cmd=(depos upgrade)
 
         if [ -n "${{ inputs.packagedef }}" ]; then
-          cmd+=("--packagedef" "${{ inputs.packagedef }}")
+          cmd+=("--packagedef" "'${{ inputs.packagedef }}'")
         fi
 
         if [ -n "${{ inputs.filter }}" ]; then
-          cmd+=("--filter" "${{ inputs.filter }}")
+          cmd+=("--filter" "'${{ inputs.filter }}'")
         fi
 
         if [ -n "${{ inputs.target }}" ]; then
-          cmd+=("--target" "${{ inputs.target }}")
+          cmd+=("--target" "'${{ inputs.target }}'")
         fi
 
         if [ -n "${{ inputs.output }}" ]; then
-          cmd+=("--output" "${{ inputs.output }}")
+          cmd+=("--output" "'${{ inputs.output }}'")
         fi
 
         "${cmd[@]}"
