@@ -23,7 +23,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Обновление зависимостей
-        uses: Stivo182/test@main
+        uses: Stivo182/depos-action@main
         with:
           filter: ${{ inputs.filter }}
           target: ${{ inputs.target }}
