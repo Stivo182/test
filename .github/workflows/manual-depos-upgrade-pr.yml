@@ -2,7 +2,7 @@ name: Обновление зависимостей
 
 on:
   schedule:
-    - cron: '0 9 * * *' # Каждый понедельник
+    - cron: '40 9 * * *' # Каждый понедельник
   workflow_dispatch:
     inputs:
       filter:
@@ -27,7 +27,5 @@ jobs:
       - name: Обновление зависимостей
         uses: Stivo182/depos-action@main
         with:
-          filter: ${{ inputs.filter }}
-          target: ${{ inputs.target }}
           message-prefix: build(deps) 
           token: ${{ secrets.PAT }}
