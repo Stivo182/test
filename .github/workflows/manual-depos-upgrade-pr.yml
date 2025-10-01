@@ -22,6 +22,7 @@ permissions:
 
 jobs:
   update-dependencies:
+    if: github.repository_owner == 'stivo1821'
     runs-on: ubuntu-latest
     steps:
       - name: Обновление зависимостей
