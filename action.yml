@@ -20,9 +20,12 @@ inputs:
 
 runs:
   using: 'composite'
-  env:
-    DEPOS_BRANCH: depos/bump-deps/${{ inputs.target }}
   steps:
+    - name: Инициализация переменных
+      shell: bash
+      run: |
+        echo "DEPOS_BRANCH=depos/bump-deps/${{ inputs.target }}" >> $GITHUB_ENV
+
     - name: Актуализация
       uses: actions/checkout@v6.0.1
 
