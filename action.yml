@@ -94,13 +94,9 @@ runs:
 
     - name: Закрытие ранее созданного PR (если изменений нет)
       if: steps.check-changes.outputs.has_changes == 'false'
-      uses: peter-evans/close-pull@v3
-      with:
-        token: ${{ inputs.token }}
-        branch: ${{ env.DEPOS_BRANCH }}
-        delete-branch: true
-        comment: >
-          Закрыт автоматически: изменений в packagedef нет.
+      run: gh pr close ${{ env.DEPOS_BRANCH }} --comment "Закрыт автоматически: изменений в packagedef нет" --delete-branch "1"
+      env:
+        GH_TOKEN: ${{ inputs.token }}
 
     - name: Создание Pull Request
       if: steps.check-changes.outputs.has_changes == 'true'
