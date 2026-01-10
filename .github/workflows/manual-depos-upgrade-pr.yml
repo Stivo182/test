@@ -26,4 +26,3 @@ jobs:
         uses: Stivo182/test@main
         with:
           message-prefix: build(deps) 
-          token: ${{ secrets.PAT }}
