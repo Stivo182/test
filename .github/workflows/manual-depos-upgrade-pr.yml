@@ -1,8 +1,6 @@
 name: Обновление зависимостей
 
 on:
-  schedule:
-    - cron: '40 9 * * *' # Каждый понедельник
   workflow_dispatch:
     inputs:
       filter:
