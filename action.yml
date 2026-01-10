@@ -94,9 +94,21 @@ runs:
 
     - name: Закрытие ранее созданного PR (если изменений нет)
       if: steps.check-changes.outputs.has_changes == 'false'
-      run: gh pr close ${{ env.DEPOS_BRANCH }} --comment "Закрыт автоматически: изменений в packagedef нет" --delete-branch "1"
+      shell: bash
       env:
         GH_TOKEN: ${{ inputs.token }}
+      run: |
+        PR_NUMBER=$(gh pr list \
+          --head "${DEPOS_BRANCH}" \
+          --state open \
+          --json number \
+          --jq '.[0].number')
+
+        if [ -n "$PR_NUMBER" ]; then
+          gh pr close "$PR_NUMBER" \
+            --comment "Закрыт автоматически: изменений в packagedef нет" \
+            --delete-branch
+        fi
 
     - name: Создание Pull Request
       if: steps.check-changes.outputs.has_changes == 'true'
