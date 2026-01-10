@@ -20,11 +20,10 @@ permissions:
 
 jobs:
   update-dependencies:
-    if: github.repository_owner == 'stivo1821'
     runs-on: ubuntu-latest
     steps:
       - name: Обновление зависимостей
-        uses: Stivo182/depos-action@main
+        uses: Stivo182/test@main
         with:
           message-prefix: build(deps) 
           token: ${{ secrets.PAT }}
