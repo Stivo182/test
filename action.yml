@@ -106,8 +106,13 @@ runs:
 
         if [ -n "$PR_NUMBER" ]; then
           gh pr close "$PR_NUMBER" \
-            --comment "Закрыт автоматически: изменений в packagedef нет" \
+            --comment "Закрыт автоматически, так как обновления в packagedef отсутствуют или уже применены." \
             --delete-branch
+          exit 0
+        fi
+
+        if git ls-remote --exit-code --heads origin "${DEPOS_BRANCH}" > /dev/null; then
+          git push origin --delete "${DEPOS_BRANCH}"
         fi
 
     - name: Создание Pull Request
